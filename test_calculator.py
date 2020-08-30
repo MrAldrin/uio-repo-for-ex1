@@ -1,4 +1,5 @@
 import calculator
+import pytest
 from math import factorial, sin
 
 def test_add_integer_exercise_1():
@@ -40,12 +41,22 @@ def test_divide_exercise_4():
 
 def test_subtract_exercise_4():
     assert calculator.subtract(5, 3) == 2 , 'should equal 2'
-    assert abs(calculator.subtract(1, 2/3) - 1/3) < 1e10 , 'should equal < 1e10'
+    assert abs(calculator.subtract(1, 2/3) - 1/3) < 1e10 , 'should be < 1e10'
 
 
 def test_multiply_exercise_4():
     assert calculator.multiply(2,3) == 6 , 'should equal 6'
 
+def test_add_typeError_exercise_5():
+    with pytest.raises(TypeError):
+        calculator.add('text',3)
+
+def test_devide_ZeroDivisionError_exercise_5():
+    with pytest.raises(ZeroDivisionError):
+        calculator.devide(2,0)
+
+
 if __name__ == "__main__":
     test_sin_exercise_4()
     test_divide_exercise_4()
+

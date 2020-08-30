@@ -1,5 +1,7 @@
 
 def add(x, y):
+    # if x or y == str:
+    #     raise ValueError('')
     return x+y
 
 def factorial(n):
@@ -16,7 +18,6 @@ def sin(x, N):
 
 def devide(x, y):
     return x / y
-
 
 def subtract(x, y):
     return x - y
