@@ -2,61 +2,45 @@ import calculator
 import pytest
 from math import factorial, sin
 
-def test_add_integer_exercise_1():
-    a = 1
-    b = 2
-    assert calculator.add(a,b) == 3, 'should equal 3'
+@pytest.mark.parametrize('arg, answ', [[(1, 2), 3], [(1, -2), -1], [(-1, -1), -2]])
+def test_add_integer_exercise_1(arg, answ):
+    assert calculator.add(arg[0], arg[1]) == answ
 
-def test_add_float_exercise_2():
-    a = .1
-    b = .2
-    assert abs(calculator.add(a,b) - .3) < 1e-10, 'should be < 1e-10'
+@pytest.mark.parametrize('arg, answ', [[(.1, .2), .3], [(.1, -.1), 0], [(-.1, -.9), -1]])
+def test_add_float_exercise_2(arg, answ):
+    assert abs(calculator.add(arg[0], arg[1]) - answ) < 1e-10, 'should be < 1e-10'
 
-def test_add_string_exercise_3():
-    a = 'Hello '
-    b = 'World'
-    assert calculator.add(a,b) == 'Hello World', 'should equal "Hello World"'
+@pytest.mark.parametrize('arg, answ', [[('Hello ', 'World'), 'Hello World'], [('No', 'Space'), 'NoSpace'], [('3rd', ' test'), '3rd test']])
+def test_add_string_exercise_3(arg, answ):
+    assert calculator.add(arg[0], arg[1]) == answ
 
-def test_factorial_exercise_4():
-    n = 3
-    assert calculator.factorial(n) == factorial(n), 'should equal factorial(n) (n = 3 -> 6)'
+@pytest.mark.parametrize('arg', [1, 2, 3])
+def test_factorial_exercise_4(arg):
+    assert calculator.factorial(arg) == factorial(arg)
 
-def test_sin_exercise_4():
-    x = 1
-    N = 5
-    # print (f'calculator value: {calculator.sin(x,N)}')        #Needed to see this in action during testing
-    # print (f'math value: {sin(x)}')
-    assert abs(calculator.sin(x,N) - sin(x)) < 1e-8, 'should be < 1e-8'
+@pytest.mark.parametrize('arg', [[0, 0], [1, 5], [6, 13]])
+def test_sin_exercise_4(arg):
+    assert abs(calculator.sin(arg[0], arg[1]) - sin(arg[0])) < 1e-6
 
-def test_divide_exercise_4():
-    a = 4
-    b = 2
-    assert calculator.devide(a, b) == 2, 'should equal 2'
-    a = .1
-    b = .3
-    # print(calculator.devide(c, d))                        #Needed to see this in action during testing
-    # print(abs(calculator.devide(c, d) - 1/3))
-    assert abs(calculator.devide(a, b) - 1/3) < 1e10, 'should be < 1e10'
+@pytest.mark.parametrize('arg, answ', [[(1, 1), 1], [(4, 2), 2], [(6, 4), 1.5]])
+def test_divide_exercise_4(arg, answ):
+    assert calculator.devide(arg[0], arg[1]) == answ
 
+@pytest.mark.parametrize('arg, answ', [[(1, 1), 0], [(2, -3), 5], [(6.5, -6), 12.5]])
+def test_subtract_exercise_4(arg, answ):
+    assert calculator.subtract(arg[0], arg[1]) == answ
 
-def test_subtract_exercise_4():
-    assert calculator.subtract(5, 3) == 2 , 'should equal 2'
-    assert abs(calculator.subtract(1, 2/3) - 1/3) < 1e10 , 'should be < 1e10'
+@pytest.mark.parametrize('arg, answ', [[(1, 1), 1], [(2, -3), -6], [(1.5, -2), -3]])
+def test_multiply_exercise_4(arg, answ):
+    assert calculator.multiply(arg[0], arg[1]) == answ
 
-
-def test_multiply_exercise_4():
-    assert calculator.multiply(2,3) == 6 , 'should equal 6'
-
-def test_add_typeError_exercise_5():
+@pytest.mark.parametrize('arg', [['hello', 0], [[1,2,3], 5], [2.3, (3, 5)]])
+def test_add_typeError_exercise_5(arg):
     with pytest.raises(TypeError):
-        calculator.add('text',3)
+        calculator.add(arg[0], arg[1])
 
-def test_devide_ZeroDivisionError_exercise_5():
+@pytest.mark.parametrize('arg', [[2, 0], [0, 0]])
+def test_devide_ZeroDivisionError_exercise_5(arg):
     with pytest.raises(ZeroDivisionError):
-        calculator.devide(2,0)
-
-
-if __name__ == "__main__":
-    test_sin_exercise_4()
-    test_divide_exercise_4()
+        calculator.devide(arg[0], arg[1])
 
